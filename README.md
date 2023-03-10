@@ -24,8 +24,7 @@ Show your hardware informaions in bash and create text for future reference.
 Things do !
 --------------------------------------------------------------------
 
-* Check_sha512.sh auto load *.sha512 file if exist.
-* Select the good hash (good line) in file if many is present.
+* more informations with NO sudo needed.
 
 
 Files and use

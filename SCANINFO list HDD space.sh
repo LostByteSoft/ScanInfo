@@ -55,11 +55,22 @@ echo -------------------------========================-------------------------
 	echo "	" >> /dev/shm/ScanInfo_HDD_$name.txt
 	echo "Show all HDD free space and informations" >> /dev/shm/ScanInfo_HDD_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_HDD_$name.txt
+	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_HDD_$name.txt
 	echo "Pc Name:"  >> /dev/shm/ScanInfo_HDD_$name.txt
 	hostname -A >> /dev/shm/ScanInfo_HDD_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_HDD_$name.txt
+	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_HDD_$name.txt
+
+echo -------------------------========================-------------------------
+	echo Machine informations:
+	echo Machine informations: >> /dev/shm/ScanInfo_LAN_$name.txt
+	hostnamectl
+	hostnamectl >> /dev/shm/ScanInfo_HARD_$name.txt
+	echo "	" >> /dev/shm/ScanInfo_HARD_$name.txt
+	echo
+	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_HARD_$name.txt
 
 echo -------------------------========================-------------------------
 	echo Name , save and mountpoint.
@@ -69,18 +80,18 @@ echo -------------------------========================-------------------------
 	lsblk
 	lsblk >> /dev/shm/ScanInfo_HDD_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_HDD_$name.txt
-
+	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_HDD_$name.txt
 
 echo -------------------------========================-------------------------
 	echo ls -lF /dev/disk/by-id/
 	echo "ls -lF /dev/disk/by-id/" >> /dev/shm/ScanInfo_HDD_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_HDD_$name.txt
-
+	echo
 	ls -lF /dev/disk/by-id/
 	ls -lF /dev/disk/by-id/ >> /dev/shm/ScanInfo_HDD_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_HDD_$name.txt
-
+	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_HDD_$name.txt
 
 echo -------------------------========================-------------------------
@@ -88,7 +99,6 @@ echo -------------------------========================-------------------------
 	echo "Capacity by disk :" >> /dev/shm/ScanInfo_HDD_$name.txt
 	echo
 	echo "	" >> /dev/shm/ScanInfo_HDD_$name.txt
-
 	echo Manual Capacity sda
 	echo Capacity sda >> /dev/shm/ScanInfo_HDD_$name.txt
 	lsblk -b --output SIZE -n -d /dev/sda
@@ -96,7 +106,6 @@ echo -------------------------========================-------------------------
 	lsblk -b --output SIZE -n -d /dev/sda  >> /dev/shm/ScanInfo_HDD_$name.txt
 	echo
 	echo "	" >> /dev/shm/ScanInfo_HDD_$name.txt
-	
 	echo Manual Capacity sdb
 	echo Capacity sdb >> /dev/shm/ScanInfo_HDD_$name.txt
 	lsblk -b --output SIZE -n -d /dev/sdb
@@ -106,32 +115,26 @@ echo -------------------------========================-------------------------
 	lsblk -b --output SIZE -n -d /dev/sdb >> /dev/shm/ScanInfo_HDD_$name.txt
 	echo
 	echo "	" >> /dev/shm/ScanInfo_HDD_$name.txt
-	
 	echo "Each disk Automatic (sda to sdz):"
 	for i in /dev/sd[a-z]; do lsblk -b --output SIZE -n -d "$i"; done
 	echo
 	echo "	" >> /dev/shm/ScanInfo_HDD_$name.txt
-	
 	echo --------------=============-------------- >> /dev/shm/ScanInfo_HDD_$name.txt
 	echo Nvme disk :
 	echo Echo Nvme disk : >> /dev/shm/ScanInfo_HDD_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_HDD_$name.txt
-	
 	echo "Each disk Automatic (nvme0n1 to nvme0n9):"
 	for i in /dev/nvme1n[0-9]; do lsblk -b --output SIZE -n -d "$i"; done
 	echo
 	echo "	" >> /dev/shm/ScanInfo_HDD_$name.txt
-
 	echo "Each disk Automatic (nvme1n0 to nvme1n9):"
 	for i in /dev/nvme1n[0-9]; do lsblk -b --output SIZE -n -d "$i"; done
 	echo
 	echo "	" >> /dev/shm/ScanInfo_HDD_$name.txt
-
 	echo "Each disk Automatic (nvme0n1p0 to nvme0n1p9):"
 	for i in /dev/nvme0n1p[0-9]; do lsblk -b --output SIZE -n -d "$i"; done
 	echo
 	echo "	" >> /dev/shm/ScanInfo_HDD_$name.txt
-
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_HDD_$name.txt
 
 echo -------------------------========================-------------------------
@@ -152,40 +155,45 @@ echo -------------------------========================-------------------------
 	echo type : hwinfo --disk --listmd
 	echo sudo hwinfo --disk --listmd >> /dev/shm/ScanInfo_HDD_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_HDD_$name.txt
-	
+	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_HDD_$name.txt
 
 echo -------------------------========================-------------------------
 	echo "Total capacity of HDD present in the system: (Mb)"
 	echo "Total capacity of HDD present in the system: (Mb)" >> /dev/shm/ScanInfo_HDD_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_HDD_$name.txt
-	
+	echo
 	df | grep '^/dev/' | awk '{s+=$2} END {print s/1048576}'
 	df | grep '^/dev/' | awk '{s+=$2} END {print s/1048576}' >> /dev/shm/ScanInfo_HDD_$name.txt
 	echo
 	echo "	" >> /dev/shm/ScanInfo_HDD_$name.txt
-	
+	df -h -t ext4
+	df -h -t ext4 >> /dev/shm/ScanInfo_HDD_$name.txt
+	echo "	" >> /dev/shm/ScanInfo_HDD_$name.txt
+	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_HDD_$name.txt
 
 echo -------------------------========================-------------------------
 	echo "Hdd temp : (Need sudo passowd)"
 	echo "Hdd temp : (Need sudo passowd)" : >> /dev/shm/ScanInfo_HDD_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_HDD_$name.txt
-	
 	## Need hddtemp
-	#echo type for i in /dev/sd[a-z]; do sudo hddtemp "$i"; done
+	echo "type for i in /dev/sd[a-z]; do sudo hddtemp "$i"; done"
+	echo "type for i in /dev/sd[a-z]; do sudo hddtemp "$i"; done" >> /dev/shm/ScanInfo_HDD_$name.txt
 	#for i in /dev/sd[a-z]; do sudo hddtemp "$i"; done
 	#for i in /dev/sd[a-z]; do sudo hddtemp "$i"; done >> /dev/shm/ScanInfo_HDD_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_HDD_$name.txt
-	
+	echo "for i in /dev/nvme0n1p[0-9]; do sudo hddtemp "$i"; done"
+	echo "for i in /dev/nvme0n1p[0-9]; do sudo hddtemp "$i"; done" >> /dev/shm/ScanInfo_HDD_$name.txt
 	#for i in /dev/nvme0n1p[0-9]; do sudo hddtemp "$i"; done
-	#for i in /dev/nvme0n1p1[0-9]; do sudo hddtemp "$i"; done >> /dev/shm/ScanInfo_HDD_$name.txt
+	#for i in /dev/nvme0n1p[0-9]; do sudo hddtemp "$i"; done >> /dev/shm/ScanInfo_HDD_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_HDD_$name.txt
-
+	echo
 	echo --------------------======= END =======-------------------- >> /dev/shm/ScanInfo_HDD_$name.txt
 
 echo -------------------------========================-------------------------
 	echo Saving...
+	echo To name : /$HOME/Desktop/ScanInfo_HARD_$name.txt
 	if zenity --no-wrap --question --text="Do you want to save informations on desktop ? (Yes or No (Suggest Yes))\n\n\tIf you choose yes the program will close automatically."
 		then
 			cp /dev/shm/ScanInfo_HDD_$name.txt /$HOME/Desktop/ScanInfo_HDD_$name.txt

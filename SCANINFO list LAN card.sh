@@ -31,6 +31,22 @@ echo -------------------------========================-------------------------
 	echo "Debug data : autoquit=$autoquit debug=$debug error=$error part=$part noquit=$noquit random=$random"
 
 echo -------------------------========================-------------------------
+
+if command -v netstat >/dev/null 2>&1
+	then
+		echo "netstat installed continue."
+		dpkg -s netstat | grep Version
+		echo "${green} ████████████████ OK ████████████████ ${reset}"
+	else
+		echo "You don't have ' netstat ' installed, no informations."
+		echo "Add with : sudo apt-get install netstat"
+		echo
+		echo "${red}████████████████ Dependency error ████████████████${reset}"
+		netstat=0
+		echo
+	fi
+
+echo -------------------------========================-------------------------
 	echo Version compiled on : Also serves as a version
 	echo 2023-02-28
 	echo
@@ -55,16 +71,21 @@ echo -------------------------========================-------------------------
 	echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
 	echo "Show all lan card and informations" >> /dev/shm/ScanInfo_LAN_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
+	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_LAN_$name.txt
 	echo "Pc Name:"  >> /dev/shm/ScanInfo_LAN_$name.txt
 	hostname -A >> /dev/shm/ScanInfo_LAN_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
+	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_LAN_$name.txt
 
 echo -------------------------========================-------------------------
+	echo Machine informations:
+	echo Machine informations: >> /dev/shm/ScanInfo_LAN_$name.txt
 	hostnamectl
 	hostnamectl >> /dev/shm/ScanInfo_LAN_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
+	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_LAN_$name.txt
 
 echo -------------------------========================-------------------------
@@ -76,7 +97,9 @@ echo -------------------------========================-------------------------
 	echo "Dns server:"
 	echo "Dns server:" >> /dev/shm/ScanInfo_LAN_$name.txt
 	cat /etc/resolv.conf
+	cat /etc/resolv.conf  >> /dev/shm/ScanInfo_LAN_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
+	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_LAN_$name.txt
 
 echo -------------------------========================-------------------------
@@ -85,6 +108,7 @@ echo -------------------------========================-------------------------
 	hostname -i
 	hostname -i >> /dev/shm/ScanInfo_LAN_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
+	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_LAN_$name.txt
 
 echo -------------------------========================-------------------------
@@ -108,7 +132,7 @@ echo -------------------------========================-------------------------
 	ip -6 addr
 	ip -6 addr >> /dev/shm/ScanInfo_LAN_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
-	
+	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_LAN_$name.txt
 
 echo -------------------------========================-------------------------
@@ -118,6 +142,7 @@ echo -------------------------========================-------------------------
 	cat /sys/class/net/*/address
 	cat /sys/class/net/*/address >> /dev/shm/ScanInfo_LAN_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
+	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_LAN_$name.txt
 
 echo -------------------------========================-------------------------
@@ -133,9 +158,12 @@ echo -------------------------========================-------------------------
 	echo "Speed : $speed1"
 	echo "Speed : $speed1" >> /dev/shm/ScanInfo_LAN_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
+	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_LAN_$name.txt
 
 echo -------------------------========================-------------------------
+
+if [ "$netstat" -eq 0 ]; then
 	echo netstat -i:
 	echo netstat -i: >> /dev/shm/ScanInfo_LAN_$name.txt
 	netstat -i
@@ -145,6 +173,10 @@ echo -------------------------========================-------------------------
 	echo "as a virtual network device that is on all systems, even if they aren't connected to any network."
 	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_LAN_$name.txt
+	else
+	echo "Add with : sudo apt-get install netstat for more informations."
+	echo "Add with : sudo apt-get install netstat for more informations." >> /dev/shm/ScanInfo_LAN_$name.txt
+	fi
 
 echo -------------------------========================-------------------------
 	echo Ip route:
@@ -155,6 +187,7 @@ echo -------------------------========================-------------------------
 	echo Route 1 : $routerip1
 	echo Route 1 : $routerip1 >> /dev/shm/ScanInfo_LAN_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
+	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_LAN_$name.txt
 
 echo -------------------------========================-------------------------
@@ -163,6 +196,7 @@ echo -------------------------========================-------------------------
 	lspci | egrep -i --color 'network|ethernet'
 	lspci | egrep -i --color 'network|ethernet' >> /dev/shm/ScanInfo_LAN_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
+	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_LAN_$name.txt
 
 echo -------------------------========================-------------------------
@@ -172,6 +206,7 @@ echo -------------------------========================-------------------------
 	echo "Not working without password"
 	echo "Not working without password" >> /dev/shm/ScanInfo_LAN_$name.txt
 	
+	## to get the lan system name
 	lan_inter=$(ip route get 8.8.8.8 | awk -- '{printf $5}')
 	
 	echo "Type: sudo ethtool $lan_inter | grep -i wake"
@@ -184,10 +219,12 @@ echo -------------------------========================-------------------------
 	echo sudo gedit /etc/systemd/network/50-wired.link >> /dev/shm/ScanInfo_LAN_$name.txt
 	
 	echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
+	echo
 	echo --------------------======= END =======-------------------- >> /dev/shm/ScanInfo_LAN_$name.txt
 
 echo -------------------------========================-------------------------
 	echo Saving...
+	echo To name : $HOME/Desktop/ScanInfo_HARD_$name.txt
 	if zenity --no-wrap --question --text="Do you want to save informations on desktop ? (Yes or No (Suggest Yes))\n\n\tIf you choose yes the program will close automatically."
 		then
 			cp /dev/shm/ScanInfo_LAN_$name.txt /$HOME/Desktop/ScanInfo_LAN_$name.txt
@@ -306,3 +343,4 @@ echo -------------------------========================-------------------------
  		H0H 0H0
 
 ## -----===== End of file =====-----
+

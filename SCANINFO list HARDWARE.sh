@@ -60,8 +60,16 @@ echo -------------------------========================-------------------------
 	hostname -A >> /dev/shm/ScanInfo_HARD_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_HARD_$name.txt
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_HARD_$name.txt
-
+	echo Computer current user:
+	echo Computer current user: >> /dev/shm/ScanInfo_HARD_$name.txt
+	echo "$USER"
+	echo "$USER" >> /dev/shm/ScanInfo_HARD_$name.txt
+	echo "	" >> /dev/shm/ScanInfo_HARD_$name.txt
+	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_HARD_$name.txt
+	
 echo -------------------------========================-------------------------
+	echo Machine informations:
+	echo Machine informations: >> /dev/shm/ScanInfo_LAN_$name.txt
 	hostnamectl
 	hostnamectl >> /dev/shm/ScanInfo_HARD_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_HARD_$name.txt
@@ -79,11 +87,14 @@ echo -------------------------========================-------------------------
 	cat /proc/cpuinfo | grep processor | wc -l >> /dev/shm/ScanInfo_HARD_$name.txt
 	cat /proc/cpuinfo | grep 'core id' >> /dev/shm/ScanInfo_HARD_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_HARD_$name.txt
+	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_HARD_$name.txt
 	echo "Cpu infos complete :"
 	echo "Cpu infos complete :" >> /dev/shm/ScanInfo_HARD_$name.txt
+	lscpu
 	lscpu >> /dev/shm/ScanInfo_HARD_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_HARD_$name.txt
+	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_HARD_$name.txt
 
 echo -------------------------========================-------------------------
@@ -92,6 +103,7 @@ echo -------------------------========================-------------------------
 	free -m
 	free -m >> /dev/shm/ScanInfo_HARD_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_HARD_$name.txt
+	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_HARD_$name.txt
 	
 echo -------------------------========================-------------------------
@@ -100,10 +112,12 @@ echo -------------------------========================-------------------------
 	glxinfo | grep "Device"
 	glxinfo | grep "Device" >> /dev/shm/ScanInfo_HARD_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_HARD_$name.txt
+	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_HARD_$name.txt
 	lspci  -v -s  $(lspci | grep ' VGA ' | cut -d" " -f 1)
 	lspci  -v -s  $(lspci | grep ' VGA ' | cut -d" " -f 1) >> /dev/shm/ScanInfo_HARD_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_HARD_$name.txt
+	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_HARD_$name.txt
 
 echo -------------------------========================-------------------------
@@ -120,6 +134,7 @@ echo -------------------------========================-------------------------
 	lsblk
 	lsblk  >> /dev/shm/ScanInfo_HARD_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_HARD_$name.txt
+	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_HARD_$name.txt
 
 echo -------------------------========================-------------------------
@@ -128,6 +143,7 @@ echo -------------------------========================-------------------------
 	ls /sys/class/drm/*/edid | xargs -i{} sh -c "echo {}; parse-edid < {}"
 	ls /sys/class/drm/*/edid | xargs -i{} sh -c "echo {}; parse-edid < {}" >> /dev/shm/ScanInfo_HARD_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_HARD_$name.txt
+	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_HARD_$name.txt
 
 echo -------------------------========================-------------------------
@@ -136,6 +152,7 @@ echo -------------------------========================-------------------------
 	lsusb
 	lsusb >> /dev/shm/ScanInfo_HARD_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_HARD_$name.txt
+	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_HARD_$name.txt
 
 echo -------------------------========================-------------------------
@@ -144,6 +161,7 @@ echo -------------------------========================-------------------------
 	sensors
 	sensors >> /dev/shm/ScanInfo_HARD_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_HARD_$name.txt
+	echo
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_HARD_$name.txt
 
 echo -------------------------========================-------------------------
@@ -156,10 +174,12 @@ echo -------------------------========================-------------------------
 	cat /sys/class/net/*/address
 	cat /sys/class/net/*/address >> /dev/shm/ScanInfo_HARD_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_HARD_$name.txt
+	echo
 	echo --------------------======= END =======-------------------- >> /dev/shm/ScanInfo_HARD_$name.txt
 
 echo -------------------------========================-------------------------
 	echo Saving...
+	echo To name : $HOME/Desktop/ScanInfo_HARD_$name.txt
 	if zenity --no-wrap --question --text="Do you want to save informations on desktop ? (Yes or No (Suggest Yes))\n\n\tIf you choose yes the program will close automatically."
 		then
 			cp /dev/shm/ScanInfo_HARD_$name.txt /$HOME/Desktop/ScanInfo_HARD_$name.txt

@@ -31,18 +31,37 @@ echo -------------------------========================-------------------------
 	echo "Debug data : autoquit=$autoquit debug=$debug error=$error part=$part noquit=$noquit random=$random"
 
 echo -------------------------========================-------------------------
+echo These 2 softwares are required but not mandatory to give all LAN data.
+	echo
+
 
 if command -v netstat >/dev/null 2>&1
 	then
 		echo "netstat installed continue."
-		dpkg -s netstat | grep Version
+		#dpkg -s netstat | grep Version
 		echo "${green} ████████████████ OK ████████████████ ${reset}"
+		netstat=1
 	else
-		echo "You don't have ' netstat ' installed, no informations."
+		echo "You don't have ' netstat ' installed."
 		echo "Add with : sudo apt-get install netstat"
 		echo
 		echo "${red}████████████████ Dependency error ████████████████${reset}"
 		netstat=0
+		echo
+	fi
+
+if command -v ethtool >/dev/null 2>&1
+	then
+		echo "ethtool installed continue."
+		#dpkg -s ethtool | grep Version
+		echo "${green} ████████████████ OK ████████████████ ${reset}"
+		ethtool=1
+	else
+		echo "You don't have ' ethtool ' installed."
+		echo "Add with : sudo apt-get install ethtool"
+		echo
+		echo "${red}████████████████ Dependency error ████████████████${reset}"
+		ethtool=0
 		echo
 	fi
 
@@ -162,21 +181,30 @@ echo -------------------------========================-------------------------
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_LAN_$name.txt
 
 echo -------------------------========================-------------------------
+echo Kernel Interface table
+	echo
 
 if [ "$netstat" -eq 0 ]; then
-	echo netstat -i:
-	echo netstat -i: >> /dev/shm/ScanInfo_LAN_$name.txt
-	netstat -i
-	netstat -i >> /dev/shm/ScanInfo_LAN_$name.txt
-	echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
+		echo "Add with : sudo apt-get install netstat for more informations."
+		echo "Add with : sudo apt-get install netstat for more informations." >> /dev/shm/ScanInfo_LAN_$name.txt
+		echo
+		echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
+	else
+		echo netstat -i:
+		echo netstat -i: >> /dev/shm/ScanInfo_LAN_$name.txt
+		netstat -i
+		netstat -i >> /dev/shm/ScanInfo_LAN_$name.txt
+		echo
+		echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
+		echo --------------------===================-------------------- >> /dev/shm/ScanInfo_LAN_$name.txt
+		echo
+		echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
+	fi
+	
 	echo "eno1 is the onboard Ethernet (wired) adapter. lo is a loopback device, You can imagine it"
 	echo "as a virtual network device that is on all systems, even if they aren't connected to any network."
+	echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
 	echo
-	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_LAN_$name.txt
-	else
-	echo "Add with : sudo apt-get install netstat for more informations."
-	echo "Add with : sudo apt-get install netstat for more informations." >> /dev/shm/ScanInfo_LAN_$name.txt
-	fi
 
 echo -------------------------========================-------------------------
 	echo Ip route:
@@ -200,26 +228,34 @@ echo -------------------------========================-------------------------
 	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_LAN_$name.txt
 
 echo -------------------------========================-------------------------
-	echo "Wake On Lan:"
-	echo "Wake On Lan:" >> /dev/shm/ScanInfo_LAN_$name.txt
-	
+	echo "Wake On Lan: (Only wired is monitored here)"
+	echo "Wake On Lan: (Only wired is monitored here)" >> /dev/shm/ScanInfo_LAN_$name.txt
+	echo
+	echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
 	echo "Not working without password"
 	echo "Not working without password" >> /dev/shm/ScanInfo_LAN_$name.txt
 	
 	## to get the lan system name
 	lan_inter=$(ip route get 8.8.8.8 | awk -- '{printf $5}')
-	
+	echo
+	echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
 	echo "Type: sudo ethtool $lan_inter | grep -i wake"
 	echo "Type: sudo ethtool $lan_inter | grep -i wake" >> /dev/shm/ScanInfo_LAN_$name.txt
-	
+	echo
+	echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
 	echo sudo ethtool $LAN | grep -i wake
 	echo ethtool $lan_inter | grep -i wake >> /dev/shm/ScanInfo_LAN_$name.txt
-	
+	echo
+	echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
 	echo sudo gedit /etc/systemd/network/50-wired.link
 	echo sudo gedit /etc/systemd/network/50-wired.link >> /dev/shm/ScanInfo_LAN_$name.txt
-	
-	echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
 	echo
+	echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
+	cat /etc/systemd/network/50-wired.link
+	cat /etc/systemd/network/50-wired.link >> /dev/shm/ScanInfo_LAN_$name.txt
+	
+	echo
+	echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
 	echo --------------------======= END =======-------------------- >> /dev/shm/ScanInfo_LAN_$name.txt
 
 echo -------------------------========================-------------------------

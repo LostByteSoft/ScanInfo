@@ -1,8 +1,4 @@
 
-# SCANINFO
-
-ScanInfo linux debian bash, informations about your hardware and configurations.
-
 SCANINFO informations about your system in bash
 --------------------------------------------------------------------
 

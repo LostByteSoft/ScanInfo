@@ -81,18 +81,16 @@ echo -------------------------========================-------------------------
 	echo
 
 echo -------------------------========================-------------------------
-	echo "Local name(s); if you have multiples card you will have multiples names here."
-	echo "Pc Name:"
 	hostname -A
 	name=$HOSTNAME
 	rm "/dev/shm/ScanInfo_LAN_$name.txt" 2> /dev/null
 	echo --------------------======= START =======-------------------- >> /dev/shm/ScanInfo_LAN_$name.txt
+	echo "Local name(s); if you have multiples card you will have multiples names here."
+	echo "Pc Name:"
+	echo "Local name(s); if you have multiples card you will have multiples names here." >> /dev/shm/ScanInfo_LAN_$name.txt
+	echo "Pc Name:" >> /dev/shm/ScanInfo_LAN_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
-	echo "Show all lan card and informations" >> /dev/shm/ScanInfo_LAN_$name.txt
-	echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
-	echo
-	echo --------------------===================-------------------- >> /dev/shm/ScanInfo_LAN_$name.txt
-	echo "Pc Name:"  >> /dev/shm/ScanInfo_LAN_$name.txt
+	hostname -A
 	hostname -A >> /dev/shm/ScanInfo_LAN_$name.txt
 	echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
 	echo
@@ -141,6 +139,8 @@ echo -------------------------========================-------------------------
 	
 	echo "Lacal ip v6:"
 	echo "Lacal ip v6:" >> /dev/shm/ScanInfo_LAN_$name.txt
+	echo
+	echo "	" >> /dev/shm/ScanInfo_LAN_$name.txt
 	ip addr show dev $LAN | sed -e's/^.*inet6 \([^ ]*\)\/.*$/\1/;t;d'
 	ip addr show dev $LAN | sed -e's/^.*inet6 \([^ ]*\)\/.*$/\1/;t;d' >> /dev/shm/ScanInfo_LAN_$name.txt
 	#echo "ip addr show dev $LAN | sed -e's/^.*inet6 \([^ ]*\)\/.*$/\1/;t;d'" >> /dev/shm/ScanInfo_LAN_$name.txt

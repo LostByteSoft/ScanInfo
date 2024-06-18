@@ -43,7 +43,7 @@ if command -v netstat >/dev/null 2>&1
 		netstat=1
 	else
 		echo "You don't have ' netstat ' installed."
-		echo "Add with : sudo apt-get install netstat"
+		echo "Add with : sudo apt-get install net-tools (netstat)"
 		echo
 		echo "${red}████████████████ Dependency error ████████████████${reset}"
 		netstat=0
@@ -52,17 +52,17 @@ if command -v netstat >/dev/null 2>&1
 
 if command -v ethtool >/dev/null 2>&1
 	then
-		echo "ethtool installed continue."
-		#dpkg -s ethtool | grep Version
-		echo "${green} ████████████████ OK ████████████████ ${reset}"
-		ethtool=1
-	else
 		echo "You don't have ' ethtool ' installed."
 		echo "Add with : sudo apt-get install ethtool"
 		echo
 		echo "${red}████████████████ Dependency error ████████████████${reset}"
 		ethtool=0
 		echo
+	else
+		echo "ethtool installed continue."
+		#dpkg -s ethtool | grep Version
+		echo "${green} ████████████████ OK ████████████████ ${reset}"
+		ethtool=1
 	fi
 
 echo -------------------------========================-------------------------

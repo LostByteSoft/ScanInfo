@@ -203,19 +203,6 @@ echo -------------------------========================-------------------------
 	rm "/dev/shm/ScanInfo_HDD_$name.txt" 2> /dev/null
 echo -------------------------========================-------------------------
 ## Software lead out
-	echo "This script take $(( SECONDS - start )) seconds to complete."
-	date=$(date -d@$(( SECONDS - start )) -u +%H:%M:%S)
-	echo "Time needed: $date"
-	now=$(date +"%Y-%m-%d_%A_%I:%M:%S")
-	echo "Current time : $now"
-echo -------------------------========================-------------------------
-	echo "If a script takes MORE than 120 seconds to complete it will ask"
-	echo "you to press ENTER to terminate."
-	echo
-	echo "If a script takes LESS than 120 seconds to complete it will auto"
-	echo "terminate after 10 seconds"
-echo -------------------------========================-------------------------
-## Software lead out
 	echo "Finish... with numbers of actions : $part"
 	echo "This script take $(( SECONDS - start )) seconds to complete."
 	date=$(date -d@$(( SECONDS - start )) -u +%H:%M:%S)
